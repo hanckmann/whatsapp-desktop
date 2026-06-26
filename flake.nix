@@ -80,24 +80,24 @@
           inherit buildInputs;
 
           postInstall = ''
-            install -Dm644 ${./src-tauri/icons/32x32.png} \
-              $out/share/icons/hicolor/32x32/apps/whatsapp-desktop.png
-            install -Dm644 ${./src-tauri/icons/128x128.png} \
-              $out/share/icons/hicolor/128x128/apps/whatsapp-desktop.png
-            install -Dm644 ${./src-tauri/icons/128x128@2x.png} \
-              $out/share/icons/hicolor/256x256/apps/whatsapp-desktop.png
-            mkdir -p $out/share/applications
-            cat > $out/share/applications/whatsapp-desktop.desktop << 'DESKTOP'
-[Desktop Entry]
-Name=WhatsApp Desktop
-Comment=WhatsApp Web wrapper for Linux
-Exec=whatsapp-desktop
-Icon=whatsapp-desktop
-Terminal=false
-Type=Application
-Categories=Network;InstantMessaging;
-StartupWMClass=WhatsApp Desktop
-DESKTOP
+                        install -Dm644 icons/32x32.png \
+                          $out/share/icons/hicolor/32x32/apps/whatsapp-desktop.png
+                        install -Dm644 icons/128x128.png \
+                          $out/share/icons/hicolor/128x128/apps/whatsapp-desktop.png
+                        install -Dm644 "icons/128x128@2x.png" \
+                          $out/share/icons/hicolor/256x256/apps/whatsapp-desktop.png
+                        mkdir -p $out/share/applications
+                        cat > $out/share/applications/whatsapp-desktop.desktop << 'DESKTOP'
+            [Desktop Entry]
+            Name=WhatsApp Desktop
+            Comment=WhatsApp Web wrapper for Linux
+            Exec=whatsapp-desktop
+            Icon=whatsapp-desktop
+            Terminal=false
+            Type=Application
+            Categories=Network;InstantMessaging;
+            StartupWMClass=WhatsApp Desktop
+            DESKTOP
           '';
 
           meta = with pkgs.lib; {
