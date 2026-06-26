@@ -1,0 +1,26 @@
+# Rust / Cargo
+target/
+Cargo.lock
+
+# Tauri build output
+src-tauri/target/
+dist/
+
+# Generated icons (regenerated via gen_icons.py)
+src-tauri/icons/
+
+# Nix / direnv
+.direnv/
+result
+result-*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
