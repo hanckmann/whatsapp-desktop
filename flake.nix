@@ -62,6 +62,52 @@
           python3Packages.pillow # for gen_icons.py
         ];
       in {
+        packages.default = pkgs.rustPlatform.buildRustPackage {
+          pname = "whatsapp-desktop";
+          version = "0.1.0";
+
+          src = ./.;
+          sourceRoot = "source/src-tauri";
+
+          cargoLock.lockFile = ./src-tauri/Cargo.lock;
+
+          nativeBuildInputs = with pkgs; [
+            pkg-config
+            wrapGAppsHook3
+            gobject-introspection
+          ];
+
+          inherit buildInputs;
+
+          postInstall = ''
+            install -Dm644 ${./src-tauri/icons/32x32.png} \
+              $out/share/icons/hicolor/32x32/apps/whatsapp-desktop.png
+            install -Dm644 ${./src-tauri/icons/128x128.png} \
+              $out/share/icons/hicolor/128x128/apps/whatsapp-desktop.png
+            install -Dm644 ${./src-tauri/icons/128x128@2x.png} \
+              $out/share/icons/hicolor/256x256/apps/whatsapp-desktop.png
+            mkdir -p $out/share/applications
+            cat > $out/share/applications/whatsapp-desktop.desktop << 'DESKTOP'
+[Desktop Entry]
+Name=WhatsApp Desktop
+Comment=WhatsApp Web wrapper for Linux
+Exec=whatsapp-desktop
+Icon=whatsapp-desktop
+Terminal=false
+Type=Application
+Categories=Network;InstantMessaging;
+StartupWMClass=WhatsApp Desktop
+DESKTOP
+          '';
+
+          meta = with pkgs.lib; {
+            description = "WhatsApp Web desktop wrapper for Linux (Tauri v2 + WebKitGTK, no Electron)";
+            homepage = "https://github.com/hanckmann/whatsapp-desktop";
+            platforms = platforms.linux;
+            mainProgram = "whatsapp-desktop";
+          };
+        };
+
         devShells.default = pkgs.mkShell {
           inherit nativeBuildInputs buildInputs;
           packages = devTools;
