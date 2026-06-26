@@ -66,10 +66,13 @@
           pname = "whatsapp-desktop";
           version = "0.1.0";
 
-          src = ./.;
-          sourceRoot = "source/src-tauri";
+          src = ./src-tauri;
 
           cargoLock.lockFile = ./src-tauri/Cargo.lock;
+
+          preBuild = ''
+            ln -s ${./dist} ../dist
+          '';
 
           nativeBuildInputs = with pkgs; [
             pkg-config
