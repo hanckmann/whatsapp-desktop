@@ -89,6 +89,7 @@ pub fn run() {
             TrayIconBuilder::new()
                 .icon(tray_icon)
                 .menu(&menu)
+                .title("WhatsApp Desktop")
                 .tooltip("WhatsApp Desktop")
                 .show_menu_on_left_click(false)
                 .on_tray_icon_event(|tray, event| {
