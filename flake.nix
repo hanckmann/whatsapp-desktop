@@ -48,6 +48,7 @@
           gst_all_1.gstreamer
           gst_all_1.gst-plugins-base
           gst_all_1.gst-plugins-good
+          gst_all_1.gst-plugins-bad
           # Tray icon support
           libayatana-appindicator
           # Additional Tauri v2 deps
@@ -151,6 +152,7 @@
             gstreamer
             gst-plugins-base
             gst-plugins-good
+            gst-plugins-bad
           ]);
 
           shellHook = ''
