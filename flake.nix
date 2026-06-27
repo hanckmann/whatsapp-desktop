@@ -82,6 +82,15 @@
 
           inherit buildInputs;
 
+          # libayatana-appindicator (and potentially others) are loaded via
+          # dlopen() at runtime, so they are NOT in the binary's rpath.
+          # wrapGAppsHook3 exposes gappsWrapperArgs for exactly this purpose.
+          preFixup = ''
+            gappsWrapperArgs+=(
+              --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath buildInputs}
+            )
+          '';
+
           postInstall = ''
                         install -Dm644 icons/32x32.png \
                           $out/share/icons/hicolor/32x32/apps/whatsapp-desktop.png
