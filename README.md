@@ -157,11 +157,33 @@ python3 gen_icons.py
 # 2. Run in development mode
 cargo tauri dev
 
-# 3. Build a release binary / AppImage / .deb
+# 3. Build a release binary / .deb / .rpm
+#    (AppImage bundling is disabled — it fails inside the Nix dev shell)
 cargo tauri build
 ```
 
 Binaries and packages are written to `src-tauri/target/release/bundle/`.
+
+---
+
+## Updating dependencies
+
+Rust crates (in `src-tauri/Cargo.toml`):
+
+```bash
+# Update to the latest semver-compatible versions (updates Cargo.lock)
+cargo update --manifest-path src-tauri/Cargo.toml
+```
+
+Nix flake inputs (dev shell toolchain and libraries, in `flake.nix`):
+
+```bash
+# Update all inputs and rewrite flake.lock
+nix flake update
+```
+
+After updating, rebuild with `cargo tauri build` and commit the updated
+`Cargo.lock` / `flake.lock` files.
 
 ---
 
