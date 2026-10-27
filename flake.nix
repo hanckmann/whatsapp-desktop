@@ -89,6 +89,19 @@
           preFixup = ''
             gappsWrapperArgs+=(
               --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath buildInputs}
+              # Same runtime env as the dev shell — without these the installed
+              # app hits the Wayland DPI bug, the broken DMA-BUF renderer path
+              # (severe repaint lag, ~1s per keystroke), and can't find
+              # GStreamer plugins or GIO TLS modules.
+              --set GDK_BACKEND x11
+              --set WEBKIT_DISABLE_DMABUF_RENDERER 1
+              --set GIO_EXTRA_MODULES ${pkgs.glib-networking}/lib/gio/modules
+              --set GST_PLUGIN_SYSTEM_PATH_1_0 ${pkgs.lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" (with pkgs.gst_all_1; [
+                gstreamer
+                gst-plugins-base
+                gst-plugins-good
+                gst-plugins-bad
+              ])}
             )
           '';
 
